@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    body {
+        background: linear-gradient(to right, #150000, #581d1d);
+    }
+
+    .student-info {
+        color: white;
+        margin-bottom: 20px;
+    }
+
+    .progress {
+        height: 25px;
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="container mt-5">
+    <center>
+    <img src="{% static "pyramid-logo.png" %}" width="100px" class="img-fluid">
+    <h1 style="color: white;" class="mb-5">Students and Their Votes</h1>
+</center>
+    {% for student, votes in sorted_students %}
+    <div class="student-info">
+        <div class="row">
+            <div class="col-10">
+                <div class="progress w-75">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ votes|add:votes }} %;" aria-valuenow="{{ votes }}" aria-valuemin="0" aria-valuemax="35"></div>
+                </div>
+            </div>
+            <div class="col-2">
+                <center>
+                <h5>{{ votes }}</h5>
+                 </center>
+            </div>
+        </div>
+        <h4>{{ student.last_name }}, {{ student.first_name }}</h4>
+    </div>
+    <hr style="border-top: 1px solid white;">
+    {% endfor %}
+</div>
+
+{% endblock %}

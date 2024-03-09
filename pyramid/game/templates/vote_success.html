@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    body {
+        background: linear-gradient(to right, #150000, #581d1d);
+    }
+
+    .student-info {
+        color: white;
+        margin-bottom: 20px;
+    }
+
+    .progress {
+        height: 25px;
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="container mt-5">
+    <center>
+        <img src="{% static "pyramid-logo.png" %}" width="100px" class="img-fluid">
+        <h2 style="color: white;">Vote Successful!</h2>
+        <form method="POST" action="{% url 'results' %}">
+            {% csrf_token %}
+            <center><button type="submit" class="btn btn-light m-4">See Result</button></center>
+        </form>
+    </center>
+</div>
+
+{% endblock %}

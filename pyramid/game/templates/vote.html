@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    body{
+        background: linear-gradient(to right, #150000, #581d1d);
+    }.alert{
+        background-color: white;
+    }
+</style>
+{% if messages %}
+        {% for message in messages %}
+        <center>
+            <div class="alert alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </center>
+        {% endfor %}
+    {% endif %}
+
+<div class="container mt-5">
+    <center>
+        <img src="{% static "pyramid-logo.png" %}" width="100px" class="img-fluid">
+        <h2 style="color: white;">Vote for your desired person.</h2>
+        <h4 style="color: white;">ex. DELA CRUZ</h4>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {{ message }}
+            <div class="row">
+                <center>
+                <div class="col-6 justify-content-center">
+                    <div class="form-group">
+                        <input type="text" class="form-control mt-4" id="recipient_surname_1" name="recipient_surname_1" placeholder="Enter last name of Person 1">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control mt-4" id="recipient_surname_2" name="recipient_surname_2" placeholder="Enter last name of Person 2">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control mt-4" id="recipient_surname_3" name="recipient_surname_3" placeholder="Enter last name of Person 3">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control mt-4" id="recipient_surname_4" name="recipient_surname_4" placeholder="Enter last name of Person 4">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control mt-4" id="recipient_surname_5" name="recipient_surname_5" placeholder="Enter last name of Person 5">
+                    </div>
+                    <button type="submit" class="btn btn-light mt-2">Vote</button>
+                </div>
+            </center>
+            </div>
+        </form>
+    </center>
+</div>
+{% endblock %}
