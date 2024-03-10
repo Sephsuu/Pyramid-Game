@@ -62,7 +62,7 @@ def vote(request):
                 if recipient != user:
                     vote, created = Vote.objects.get_or_create(voter=user, recipient=recipient)
                     if not created:
-                        vote.vote_count += 1
+                        vote.vote_count += 5
                         vote.save()
                     voted_students.add(surname)
             except Students.DoesNotExist:
@@ -82,7 +82,15 @@ def results(request):
         total_votes = Vote.objects.filter(recipient=student).count()
         student_votes[student] = total_votes
 
+    # Sort students by their votes in descending order
     sorted_students = sorted(student_votes.items(), key=lambda x: x[1], reverse=True)
+
+    # Get the highest number of votes
+    highest_votes = sorted_students[0][1]
+
+    # Calculate percentage of votes for each student
+    for i, (_, votes) in enumerate(sorted_students):
+        sorted_students[i] = (sorted_students[i][0], votes, round(votes / highest_votes * 100))
 
     return render(request, 'results.html', {'sorted_students': sorted_students})
 

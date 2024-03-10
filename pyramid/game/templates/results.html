@@ -18,23 +18,42 @@
     }
 </style>
 
-<div class="container mt-5">
+<div class="container mt-2">
     <center>
-    <img src="{% static "pyramid-logo.png" %}" width="100px" class="img-fluid">
-    <h1 style="color: white;" class="mb-5">Students and Their Votes</h1>
-</center>
-    {% for student, votes in sorted_students %}
+        <img src="{% static "pyramid-logo.png" %}" width="100px" class="img-fluid">
+        <h1 style="color: white; font-size: 32px;" class="mb-4">Voting Result</h1>
+        <h1 style="color: white;">Rankings:</h1>
+        <div class="row d-flex mb-5">
+            <div class="col-2" style="color: rgb(3, 121, 3);"><h1>A</h1></div>
+            <div class="col-3" style="color: #Eac724;"><h1>B</h1></div>
+            <div class="col-2" style="color: #D56805;"><h1>C</h1></div>
+            <div class="col-3" style="color: #A40707;"><h1>D</h1></div>
+            <div class="col-2" style="color: white;"><h1>F</h1></div>
+        </div>
+        <hr style="border-top: 3px solid white;">
+    </center>
+    {% for student, votes, votes_percentage in sorted_students %}
     <div class="student-info">
         <div class="row">
             <div class="col-10">
-                <div class="progress w-75">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ votes|add:votes }} %;" aria-valuenow="{{ votes }}" aria-valuemin="0" aria-valuemax="35"></div>
+                <div class="progress w-100">
+                    {% if votes >= 7 %}
+                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ votes_percentage }}%;" aria-valuenow="{{ votes }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    {% elif votes >= 5 %}
+                        <div class="progress-bar" role="progressbar" style="width: {{ votes_percentage }}%; background: #Eac724;" aria-valuenow="{{ votes }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    {% elif votes >= 3 %}
+                        <div class="progress-bar" role="progressbar" style="width: {{ votes_percentage }}%; background: #D56805;" aria-valuenow="{{ votes }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    {% elif votes >= 1 %}
+                        <div class="progress-bar" role="progressbar" style="width: {{ votes_percentage }}%; background: #A40707;" aria-valuenow="{{ votes }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    {% else %}
+                        <div class="progress-bar bg-light" role="progressbar" style="width: {{ votes_percentage }}%;" aria-valuenow="{{ votes }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    {% endif %}
                 </div>
             </div>
             <div class="col-2">
                 <center>
-                <h5>{{ votes }}</h5>
-                 </center>
+                    <h5>{{ votes }}</h5>
+                </center>
             </div>
         </div>
         <h4>{{ student.last_name }}, {{ student.first_name }}</h4>
